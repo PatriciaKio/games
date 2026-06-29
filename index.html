@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sustainability Games &amp; Design</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0f1720;
+    color: #e9eef3;
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 56px 20px 80px;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 48px; }
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 2.5px;
+    text-transform: uppercase; color: #6fcf97; margin-bottom: 14px;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif; font-weight: 400;
+    font-size: 44px; line-height: 1.1; margin-bottom: 14px;
+  }
+  .lede { color: #9fb0bf; font-size: 17px; max-width: 620px; margin: 0 auto; }
+  .grid { display: grid; gap: 20px; }
+  .card {
+    display: block; text-decoration: none; color: inherit;
+    background: #18222e; border: 1px solid #243140; border-radius: 14px;
+    padding: 26px 28px; transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .card:hover { transform: translateY(-3px); border-color: #6fcf97; background: #1c2836; }
+  .card-tag {
+    display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 999px; margin-bottom: 12px;
+  }
+  .tag-game { background: rgba(111,207,151,.15); color: #6fcf97; }
+  .tag-design { background: rgba(127,176,255,.15); color: #7fb0ff; }
+  .card h2 { font-size: 21px; font-weight: 700; margin-bottom: 6px; }
+  .card p { color: #9fb0bf; font-size: 15px; }
+  .card .go { margin-top: 14px; font-size: 14px; font-weight: 600; color: #6fcf97; }
+  footer { margin-top: 56px; text-align: center; color: #5d6e7d; font-size: 13px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">Learning Sustainability Through Game Design</div>
+      <h1>Sustainability Games &amp; Design</h1>
+      <p class="lede">A small collection of browser-based games and design artifacts exploring sustainability,
+        infrastructure, and systems thinking. Everything runs client-side — no install, no sign-in.</p>
+    </header>
+
+    <div class="grid">
+      <a class="card" href="Games_02/index.html">
+        <span class="card-tag tag-game">Playable Game</span>
+        <h2>FlowPath — Sustainable Irrigation</h2>
+        <p>Carve water channels across six real-world river basins, balancing path length, elevation/pumping,
+          slope/erosion, pollution, and drainage reuse to design the lowest-cost sustainable irrigation route.</p>
+        <div class="go">Play →</div>
+      </a>
+
+      <a class="card" href="Games_02/civic-pulse/index.html">
+        <span class="card-tag tag-game">Playable Game</span>
+        <h2>Civic Pulse — Steward of the Storm</h2>
+        <p>A management sim: govern the city of Oakhaven across a 4-year term of 16 seasons, running the real
+          disaster-management cycle and learning that short-term efficiency creates long-term vulnerability.</p>
+        <div class="go">Play →</div>
+      </a>
+
+      <a class="card" href="Games_01/Method_Diagram_EcoBalance.html">
+        <span class="card-tag tag-design">Design Artifact</span>
+        <h2>EcoBalance — Method Diagram</h2>
+        <p>A visual method diagram documenting the game-design process and research framing behind the
+          EcoBalance sustainability game.</p>
+        <div class="go">View →</div>
+      </a>
+    </div>
+
+    <footer>Built with plain HTML, CSS, and JavaScript · Hosted on GitHub Pages</footer>
+  </div>
+</body>
+</html>

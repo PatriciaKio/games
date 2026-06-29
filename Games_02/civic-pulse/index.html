@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Civic Pulse — Steward of the Storm</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- decorative seasonal weather layer (pointer-events:none) -->
+  <div id="weather" class="weather-layer"></div>
+
+  <!-- Intro / briefing modal -->
+  <div id="modal" class="modal">
+    <div class="modal-card">
+      <h1>Civic Pulse</h1>
+      <p class="tagline">Steward of the Storm — a resilience management sim</p>
+      <p>You are the new Mayor of <b>Oakhaven</b>, a mid-sized city modeled on real
+         Chicago disasters. Over a <b>4-year term (16 seasons)</b> you will face floods,
+         heat waves, an industrial collapse, and the blizzard that ends every Chicago
+         mayor's story.</p>
+      <p>Each season runs the real disaster-management cycle:
+         <b>Assess &amp; Budget → Shock → Triage → Aftermath</b>.</p>
+      <ul class="brief">
+        <li>💰 <b>Budget</b> — buy your way out of problems, until you can't.</li>
+        <li>🤝 <b>Social Capital</b> (Bonding · Bridging · Linking) — community trust that
+            absorbs chaos and makes recovery cheaper.</li>
+        <li>🏗️ <b>Hardiness</b> — physical infrastructure that blunts damage.</li>
+        <li>🗳️ <b>Approval</b> — fall below the line and you're impeached.</li>
+      </ul>
+      <p class="warn-text">The trap: <b>invisible prevention</b> is thankless but cheap;
+         <b>visible reaction</b> wins votes but costs a fortune. The best game isn't a
+         disaster-free one — it's one where Oakhaven catches itself.</p>
+      <button id="beginBtn" class="primary big">Begin your term →</button>
+      <p class="footnote">Research build · per-turn telemetry is recorded and exportable.
+         Events are real, sourced Chicago history (see README).</p>
+    </div>
+  </div>
+
+  <header id="hud"></header>
+
+  <main id="game">
+    <section id="map" class="col"></section>
+    <section id="panel" class="col panel"></section>
+    <aside id="townsquare" class="col"></aside>
+  </main>
+
+  <!-- load order matters (plain scripts, no modules, so double-click works) -->
+  <script src="js/balance.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/telemetry.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

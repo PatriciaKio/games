@@ -1,0 +1,267 @@
+/* =====================================================================
+   Civic Pulse — style.css
+   Colorblind-safe: every meaningful color is paired with an icon, number,
+   or label. Sequential brightness (not hue) signals map decay. Target
+   WCAG 2.1 AA contrast for text.
+   ===================================================================== */
+:root {
+  --bg: #0f1622;
+  --panel: #18222f;
+  --panel2: #1f2c3c;
+  --ink: #eaf1f7;
+  --muted: #9fb2c4;
+  --line: #2c3a4d;
+  --accent: #4ea1ff;
+  --good: #36c08f;
+  --bad: #ff6b6b;
+  --warn: #ffb454;
+  --gold: #f5c542;
+  --bond: #6fb1ff;
+  --bridge: #57d6c4;
+  --link: #c79bff;
+  --hard: #f0a35e;
+  --appr: #ffd166;
+  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ---------- HUD ---------- */
+#hud {
+  display: flex; justify-content: space-between; align-items: stretch;
+  gap: 12px; padding: 10px 16px; background: var(--panel2);
+  border-bottom: 1px solid var(--line); flex-wrap: wrap;
+}
+.hud-left { display: flex; gap: 12px; align-items: center; }
+.turnbox { text-align: center; line-height: 1.1; }
+.turnbox .yr { font-weight: 700; }
+.turnbox .tn { color: var(--muted); font-size: 12px; }
+.hud-meters { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  padding: 6px 10px; display: flex; align-items: center; gap: 8px; min-width: 96px;
+}
+.chip .ic { font-size: 18px; }
+.chip.budget b { font-size: 20px; }
+.chip small { color: var(--muted); font-size: 11px; display: block; }
+.chip .mwrap { line-height: 1.1; min-width: 56px; }
+.chip .mwrap b { font-size: 16px; }
+.bar { height: 5px; background: #0c121b; border-radius: 4px; overflow: hidden; margin-top: 3px; }
+.bar span { display: block; height: 100%; }
+.m-bond { background: var(--bond); } .m-bridge { background: var(--bridge); }
+.m-link { background: var(--link); } .m-soc { background: #8ad; }
+.m-hard { background: var(--hard); } .m-appr { background: var(--appr); }
+.chip.meter.danger { border-color: var(--bad); box-shadow: 0 0 0 1px var(--bad) inset; }
+
+/* ---------- layout ---------- */
+#game {
+  display: grid; grid-template-columns: 1fr 1.4fr 0.9fr; gap: 14px;
+  padding: 14px; max-width: 1280px; margin: 0 auto; align-items: start;
+}
+.col { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.col h3 { margin: 0 0 10px; font-size: 15px; }
+.col h3 small { color: var(--muted); font-weight: 400; }
+@media (max-width: 900px) { #game { grid-template-columns: 1fr; } }
+
+/* ---------- city map ---------- */
+.districts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.district { border-radius: 10px; padding: 10px; border: 1px solid var(--line); }
+.district .d-ic { font-size: 22px; }
+.district .d-name { font-weight: 700; font-size: 13px; }
+.district .d-note { color: var(--muted); font-size: 11px; }
+.district .d-v { font-size: 11px; margin-top: 4px; opacity: .9; }
+.district.vital  { background: #173a30; border-color: #2c6e57; }
+.district.fading { background: #3a3320; border-color: #6e5e2c; }
+.district.gray   { background: #2a2f35; border-color: #444b52; color: #b9c2cb; filter: grayscale(.5); }
+
+/* ---------- town square ---------- */
+.post { display: flex; gap: 8px; padding: 8px; border-bottom: 1px solid var(--line); font-size: 13px; }
+.post:last-child { border-bottom: 0; }
+.p-ic { font-size: 16px; }
+
+/* ---------- panel / phases ---------- */
+.panel { min-height: 420px; }
+.phase-head h2 { margin: 0 0 2px; font-size: 20px; }
+.phase-sub { color: var(--accent); font-size: 13px; font-weight: 600; margin-left: 8px; }
+.hint { color: var(--muted); font-size: 13px; margin: 4px 0 12px; }
+.availbar { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px;
+  padding: 8px 12px; margin-bottom: 10px; }
+.availbar b { color: var(--good); font-size: 18px; }
+
+/* budget lines */
+.lines { display: flex; flex-direction: column; gap: 8px; }
+.line { display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+.line.social { border-left: 4px solid var(--bridge); }
+.line.hard   { border-left: 4px solid var(--hard); }
+.line.trap   { border-left: 4px solid var(--bad); }
+.line-title { font-weight: 700; font-size: 14px; }
+.line-title .tag { font-size: 10px; color: var(--muted); font-style: normal;
+  border: 1px solid var(--line); border-radius: 6px; padding: 1px 5px; margin-left: 6px; }
+.line-desc { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.line-ctrl { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.line-ctrl .amt { min-width: 44px; text-align: center; font-weight: 700; }
+.line-ctrl button { width: 30px; height: 30px; border-radius: 8px; font-size: 18px; }
+
+/* event card */
+.eventcard { background: var(--panel2); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px; margin: 8px 0 14px; }
+.eventcard.major { border-color: var(--warn); box-shadow: 0 0 0 1px var(--warn) inset; }
+.eventcard.quiet { border-color: var(--good); }
+.ev-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+.ev-fact { font-size: 14px; line-height: 1.5; }
+.ev-src { color: var(--muted); font-size: 12px; margin-top: 8px; }
+.ev-sdg { margin-top: 10px; font-size: 12px; color: #cfe4ff; line-height: 1.4;
+  background: rgba(78,161,255,.12); border-left: 3px solid var(--accent);
+  padding: 7px 10px; border-radius: 6px; }
+
+/* responsible-budget advisor */
+.advisor { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.adv-title { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+.adv { font-size: 12.5px; padding: 7px 10px; border-radius: 8px; border-left: 4px solid var(--line);
+  background: #0e1620; animation: rise-in .3s ease-out; }
+.adv.good { border-color: var(--good); }
+.adv.warn { border-color: var(--warn); }
+.adv.bad  { border-color: var(--bad); }
+
+/* triage choices */
+.choices { display: flex; flex-direction: column; gap: 10px; }
+.choice { text-align: left; padding: 12px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--panel2); color: var(--ink); cursor: pointer; }
+.choice:hover { border-color: var(--accent); }
+.choice.community { border-left: 4px solid var(--good); }
+.choice.visible   { border-left: 4px solid var(--accent); }
+.choice.deflect   { border-left: 4px solid var(--bad); }
+.c-label { font-weight: 700; font-size: 15px; }
+.c-desc { color: var(--muted); font-size: 13px; margin: 2px 0; }
+.c-meta { font-size: 12px; color: var(--ink); opacity: .8; }
+
+/* aftermath */
+.aftergrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 10px 0; }
+.stat { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 10px; text-align: center; }
+.stat span { display: block; color: var(--muted); font-size: 11px; }
+.stat b { font-size: 20px; }
+.perfect-banner { background: #173a30; border: 1px solid #2c6e57; color: #b6f0d8;
+  border-radius: 10px; padding: 10px; margin: 8px 0; font-weight: 600; }
+.ledger { background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin-top: 6px; }
+.ledger h3 { margin: 0 0 8px; }
+.ledger ul { margin: 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.led { font-size: 13px; padding: 8px 10px; border-radius: 8px; border-left: 4px solid var(--line); background: #0e1620; }
+.led.good { border-color: var(--good); }
+.led.bad { border-color: var(--bad); }
+.led.warn { border-color: var(--warn); }
+.led.perfect { border-color: var(--gold); background: #2a2614; }
+
+/* actions / buttons */
+.phase-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; }
+button { cursor: pointer; border: 1px solid var(--line); background: var(--panel2); color: var(--ink);
+  padding: 9px 14px; border-radius: 9px; font-size: 14px; }
+button:disabled { opacity: .4; cursor: not-allowed; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #062038; font-weight: 700; }
+button.ghost { background: transparent; }
+button.big { font-size: 16px; padding: 12px 22px; }
+
+/* game over */
+.gameover { text-align: center; padding: 10px; }
+.gameover h2 { font-size: 26px; }
+.gameover.gold h2 { color: var(--gold); }
+.gameover.win h2 { color: var(--good); }
+.gameover.lose h2 { color: var(--bad); }
+.takeaway { color: var(--muted); font-style: italic; margin-top: 16px; font-size: 13px; }
+
+/* ---------- modal ---------- */
+.modal { position: fixed; inset: 0; background: rgba(6,10,16,.86); display: flex;
+  align-items: center; justify-content: center; padding: 20px; z-index: 50; }
+.modal-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+  padding: 24px; max-width: 560px; max-height: 92vh; overflow: auto; }
+.modal-card h1 { margin: 0; font-size: 30px; }
+.tagline { color: var(--accent); margin: 4px 0 14px; font-weight: 600; }
+.brief { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.brief li { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: 13px; }
+.warn-text { background: #2a2614; border: 1px solid #6e5e2c; border-radius: 8px; padding: 10px; font-size: 13px; }
+.footnote { color: var(--muted); font-size: 11px; margin-top: 12px; }
+
+/* =====================================================================
+   GRAPHICS / FUN LAYER (effects.js drives these)
+   ===================================================================== */
+
+/* ---- seasonal weather overlay ---- */
+.weather-layer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 40; }
+.wx { position: absolute; top: -6vh; will-change: transform; }
+.wx.drop {
+  width: 2px; height: 16px; border-radius: 2px;
+  background: linear-gradient(transparent, rgba(127,180,255,.85));
+  opacity: .55; animation: wx-rain linear infinite;
+}
+.wx.flake { color: #dbe9ff; opacity: .85; text-shadow: 0 0 6px rgba(180,210,255,.5); animation: wx-snow linear infinite; }
+.wx.leaf  { opacity: .9; animation: wx-leaf linear infinite; }
+@keyframes wx-rain { to { transform: translateY(112vh); } }
+@keyframes wx-snow { to { transform: translateY(112vh) translateX(26px) rotate(360deg); } }
+@keyframes wx-leaf { 0% { transform: translateY(-6vh) rotate(0); } 100% { transform: translateY(112vh) rotate(560deg); } }
+/* summer heat shimmer (no particles) */
+.weather-layer.heat::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,180,84,.10), rgba(255,120,40,.05) 40%, transparent 70%);
+  animation: wx-shimmer 4s ease-in-out infinite;
+}
+@keyframes wx-shimmer { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+/* weather (z-40) drifts over the panels; the intro modal (z-50) stays on top of it. */
+
+/* ---- disaster screen shake ---- */
+body.shake { animation: shake .6s cubic-bezier(.36,.07,.19,.97); }
+@keyframes shake {
+  10%,90% { transform: translate(-2px,1px); } 20%,80% { transform: translate(4px,-2px); }
+  30%,50%,70% { transform: translate(-6px,3px); } 40%,60% { transform: translate(6px,-3px); }
+}
+
+/* ---- full-screen color flash ---- */
+.fx-flash { position: fixed; inset: 0; pointer-events: none; z-index: 55; animation: fx-fade .75s ease-out forwards; }
+.fx-flash.bad  { background: radial-gradient(circle at 50% 45%, transparent 35%, rgba(255,50,50,.42)); }
+.fx-flash.good { background: radial-gradient(circle at 50% 45%, transparent 35%, rgba(54,220,150,.34)); }
+@keyframes fx-fade { from { opacity: 1; } to { opacity: 0; } }
+
+/* ---- victory confetti ---- */
+.confetti { position: fixed; top: -6vh; z-index: 60; pointer-events: none; border-radius: 2px;
+  animation: confetti-fall linear forwards; }
+@keyframes confetti-fall { to { transform: translateY(112vh) rotate(760deg); } }
+
+/* ---- animate the existing UI (meters, cards, map) ---- */
+.bar span { transition: width .6s cubic-bezier(.2,.8,.2,1); }
+.chip.meter { transition: box-shadow .3s, border-color .3s; }
+.chip.meter.danger { animation: pulse-danger 1.3s ease-in-out infinite; }
+@keyframes pulse-danger { 0%,100% { box-shadow: 0 0 0 1px var(--bad) inset; } 50% { box-shadow: 0 0 10px 1px var(--bad); } }
+
+.district { transition: background .5s, border-color .5s, transform .15s, filter .5s; }
+.district:hover { transform: translateY(-3px); }
+.district.gray { animation: pulse-warn 2s ease-in-out infinite; }
+@keyframes pulse-warn { 0%,100% { border-color: #444b52; } 50% { border-color: var(--warn); } }
+
+.eventcard { animation: rise-in .45s ease-out; }
+.eventcard.major { animation: rise-in .45s ease-out, card-jolt .5s .15s; }
+@keyframes card-jolt { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-7px); } 75% { transform: translateX(7px); } }
+.post { animation: slide-in .4s ease-out; }
+.choice { transition: transform .14s, border-color .14s, box-shadow .14s; }
+.choice:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.35); }
+.led, .stat, .gameover { animation: rise-in .4s ease-out; }
+.perfect-banner { animation: rise-in .4s ease-out, glow-gold 1.6s ease-in-out infinite; }
+@keyframes glow-gold { 0%,100% { box-shadow: 0 0 0 1px #2c6e57 inset; } 50% { box-shadow: 0 0 14px rgba(54,192,143,.55); } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes slide-in { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+
+button.primary { transition: filter .15s, transform .1s; }
+button.primary:hover { filter: brightness(1.08); }
+button.primary:active { transform: translateY(1px); }
+
+/* gold game-over gets a celebratory sheen */
+.gameover.gold { animation: rise-in .4s ease-out; }
+.gameover.gold h2 { text-shadow: 0 0 18px rgba(245,197,66,.6); }
+
+@media (prefers-reduced-motion: reduce) {
+  .wx, .weather-layer.heat::before, body.shake, .fx-flash, .confetti,
+  .chip.meter.danger, .district.gray, .eventcard, .eventcard.major, .post,
+  .perfect-banner, .led, .stat, .gameover { animation: none !important; transition: none !important; }
+}

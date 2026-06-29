@@ -1,0 +1,13 @@
+# Local editor / agent settings
+.claude/
+**/.claude/
+
+# Research, planning & discussion docs (not part of the deployed site)
+*.doc
+Sustainability_Game_Discussion_Post.md
+analytic-toolkit.md
+civic-pulse-plan.md
+game-plan.md
+research-gaps.md
+sources.md
+civic-pulse-sources.md

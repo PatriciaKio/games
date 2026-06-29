@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Method Diagram — EcoBalance Game Design</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f4f6f9;
+    font-family: 'Inter', system-ui, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .page {
+    width: 900px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.10);
+    padding: 48px 52px 52px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 2px solid #f0f0f2;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 26px;
+    color: #111827;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 400;
+  }
+  .header-sub strong { color: #374151; font-weight: 600; }
+
+  /* ── PHASE STRUCTURE ── */
+  .phase-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: 0;
+  }
+
+  /* Left phase label */
+  .phase-label {
+    width: 90px;
+    flex-shrink: 0;
+    padding-top: 18px;
+    padding-right: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+  }
+  .phase-num {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .phase-name {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: right;
+    line-height: 1.3;
+  }
+
+  /* Connector line running down left side */
+  .phase-line {
+    width: 2px;
+    background: #e5e7eb;
+    margin-right: 20px;
+    flex-shrink: 0;
+    align-self: stretch;
+    border-radius: 2px;
+    position: relative;
+  }
+  .phase-line::before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Box content area */
+  .phase-content {
+    flex: 1;
+    padding-bottom: 0;
+  }
+
+  /* Arrow between phases */
+  .arrow-row {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding-left: 112px;
+  }
+  .arrow-shaft {
+    width: 2px;
+    height: 28px;
+    background: #d1d5db;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+  .arrow-label {
+    font-size: 10px;
+    color: #9ca3af;
+    font-style: italic;
+    margin-left: 16px;
+    margin-top: -14px;
+  }
+
+  /* ── PHASE BOXES ── */
+  .box {
+    border-radius: 10px;
+    border: 1.5px solid;
+    padding: 16px 18px 18px;
+    margin-bottom: 0;
+    position: relative;
+  }
+  .box-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid;
+    letter-spacing: -0.1px;
+  }
+
+  /* Grid layouts inside boxes */
+  .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cols-5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 8px; }
+
+  .col-cell {
+    padding: 10px 10px 12px;
+    border-radius: 7px;
+    border: 1px solid;
+  }
+  .col-cell-num {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+    opacity: 0.35;
+  }
+  .col-cell-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+  .col-cell-body {
+    font-size: 11px;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+
+  /* Single-column text block */
+  .text-block {
+    font-size: 12px;
+    line-height: 1.6;
+    color: inherit;
+  }
+
+  /* Research citation list */
+  .cite-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .cite-item {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
+  .cite-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  /* Loop step pills */
+  .loop-pills {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .loop-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .loop-arrow {
+    font-size: 14px;
+    color: #9ca3af;
+    font-weight: 300;
+  }
+
+  /* Metrics grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+  .metric-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .metric-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── PHASE COLOR THEMES ── */
+
+  /* Phase 1 — Research (Blue) */
+  .p1-label .phase-num  { color: #2563eb; }
+  .p1-label .phase-name { color: #3b82f6; }
+  .p1-line { color: #93c5fd; }
+  .p1-line::before { background: #3b82f6; }
+  .box-p1 { background: #f0f7ff; border-color: #bfdbfe; }
+  .box-p1 .box-title { color: #1e40af; border-bottom-color: #bfdbfe; }
+  .box-p1 .col-cell { background: #dbeafe; border-color: #93c5fd; }
+  .box-p1 .col-cell-label { color: #1e40af; }
+  .box-p1 .col-cell-body { color: #1d4ed8; }
+  .box-p1 .col-cell-num { color: #1e40af; }
+  .box-p1 .cite-dot { background: #3b82f6; }
+  .box-p1 .cite-item { color: #1e40af; }
+
+  /* Phase 2 — Concept (Amber) */
+  .p2-label .phase-num  { color: #d97706; }
+  .p2-label .phase-name { color: #f59e0b; }
+  .p2-line { color: #fcd34d; }
+  .p2-line::before { background: #f59e0b; }
+  .box-p2 { background: #fffbeb; border-color: #fde68a; }
+  .box-p2 .box-title { color: #92400e; border-bottom-color: #fde68a; }
+  .box-p2 .col-cell { background: #fef3c7; border-color: #fcd34d; }
+  .box-p2 .col-cell-label { color: #92400e; }
+  .box-p2 .col-cell-body { color: #78350f; }
+  .box-p2 .col-cell-num { color: #b45309; }
+
+  /* Phase 3 — Spec (Purple) */
+  .p3-label .phase-num  { color: #7c3aed; }
+  .p3-label .phase-name { color: #8b5cf6; }
+  .p3-line { color: #c4b5fd; }
+  .p3-line::before { background: #8b5cf6; }
+  .box-p3 { background: #faf5ff; border-color: #ddd6fe; }
+  .box-p3 .box-title { color: #5b21b6; border-bottom-color: #ddd6fe; }
+  .box-p3 .col-cell { background: #ede9fe; border-color: #c4b5fd; }
+  .box-p3 .col-cell-label { color: #5b21b6; }
+  .box-p3 .col-cell-body { color: #6d28d9; }
+  .box-p3 .col-cell-num { color: #7c3aed; }
+  .box-p3 .loop-pill { background: #7c3aed; color: #ffffff; }
+
+  /* Phase 4 — AI Refine (Pink) */
+  .p4-label .phase-num  { color: #be185d; }
+  .p4-label .phase-name { color: #ec4899; }
+  .p4-line { color: #f9a8d4; }
+  .p4-line::before { background: #ec4899; }
+  .box-p4 { background: #fdf2f8; border-color: #fbcfe8; }
+  .box-p4 .box-title { color: #9d174d; border-bottom-color: #fbcfe8; }
+  .box-p4 .col-cell { background: #fce7f3; border-color: #f9a8d4; }
+  .box-p4 .col-cell-label { color: #9d174d; }
+  .box-p4 .col-cell-body { color: #be185d; }
+  .box-p4 .col-cell-num { color: #db2777; }
+
+  /* Phase 5 — Share (Green) */
+  .p5-label .phase-num  { color: #15803d; }
+  .p5-label .phase-name { color: #16a34a; }
+  .p5-line { color: #86efac; }
+  .p5-line::before { background: #16a34a; }
+  .box-p5 { background: #f0fdf4; border-color: #bbf7d0; }
+  .box-p5 .box-title { color: #14532d; border-bottom-color: #bbf7d0; }
+  .box-p5 .col-cell { background: #dcfce7; border-color: #86efac; }
+  .box-p5 .col-cell-label { color: #14532d; }
+  .box-p5 .col-cell-body { color: #166534; }
+  .box-p5 .col-cell-num { color: #16a34a; }
+
+  /* ── LEGEND ── */
+  .legend {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1.5px solid #f0f0f2;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .legend-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #9ca3af;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: #374151;
+    font-weight: 500;
+  }
+  .legend-chip {
+    width: 26px;
+    height: 12px;
+    border-radius: 4px;
+  }
+
+  /* ── WIN CONDITION ── */
+  .win-box {
+    margin-top: 10px;
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #166534;
+    line-height: 1.6;
+  }
+  .win-box strong { color: #14532d; font-weight: 700; }
+
+  /* research connects badge */
+  .research-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #16a34a;
+    margin-top: 8px;
+  }
+  .research-badge::before {
+    content: '↻';
+    font-size: 11px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">Discussion 6 &amp; Homework 4 · Game-Based Learning</div>
+    <div class="header-title">Method Diagram: Research → Game Design</div>
+    <div class="header-sub"><strong>EcoBalance</strong> · Sustainability Education · One-Page Game Spec</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PHASE 1 — RESEARCH
+  ══════════════════════════════════════════ -->
+  <div class="phase-row">
+    <div class="phase-label p1-label">
+      <span class="phase-num">Phase 1</span>
+      <span class="phase-name">Research</span>
+    </div>
+    <div class="phase-line p1-line"></div>
+    <div class="phase-content">
+
+      <!-- Box 1a: Starting Question -->
+      <div class="box box-p1" style="margin-bottom:10px;">
+        <div class="box-title">Academic Prompt &amp; Research Question</div>
+        <div class="text-block" style="color:#1e40af;">
+          How do <strong>games support learning outcomes</strong>? What does peer-reviewed research say about game-based learning in education — specifically for sustainability and environmental topics?
+        </div>
+      </div>
+
+      <!-- Box 1b: Literature -->
+      <div class="box box-p1" style="margin-bottom:10px;">
+        <div class="box-title">Peer-Reviewed Literature Review</div>
+        <div class="cols-3">
+          <div class="col-cell">
+            <div class="col-cell-label">GBL Foundations</div>
+            <div class="col-cell-body">Plass, Homer &amp; Kinzer (2015) — challenge, response, feedback as three pillars of GBL. Cognitive, affective, motivational &amp; sociocultural engagement.</div>
+          </div>
+          <div class="col-cell">
+            <div class="col-cell-label">GBL Outcomes</div>
+            <div class="col-cell-body">Frontiers in Psychology meta-analysis (2024) — moderate-to-large effect on motivation, engagement &amp; cognitive performance; especially effective for lower prior-knowledge learners.</div>
+          </div>
+          <div class="col-cell">
+            <div class="col-cell-label">Games + Sustainability</div>
+            <div class="col-cell-body">Tan et al. (2023); ILE two-phase review (2024); Frontiers in Education (2025) — serious games increase environmental knowledge, pro-environmental attitudes &amp; behaviour change.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Box 1c: Key Findings -->
+      <div class="box box-p1">
+        <div class="box-title">Key Research Findings Applied to Design</div>
+        <div class="cite-list">
+          <div class="cite-item">
+            <div class="cite-dot"></div>
+            <span><strong>Immediate feedback loops</strong> drive retention — games must show consequences of choices visibly and quickly (Plass et al., 2015)</span>
+          </div>
+          <div class="cite-item">
+            <div class="cite-dot"></div>
+            <span><strong>Delayed feedback</strong> mirrors real ecological systems and builds systems thinking (Tan et al., 2023)</span>
+          </div>
+          <div class="cite-item">
+            <div class="cite-dot"></div>
+            <span><strong>Player agency and role identity</strong> deepen engagement and learning transfer — being "someone" in the game matters (Plass et al., 2015)</span>
+          </div>
+          <div class="cite-item">
+            <div class="cite-dot"></div>
+            <span><strong>Failure as learning</strong> — corrective debrief after failure significantly improves knowledge retention (Mayer &amp; Johnson, 2010)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ARROW -->
+  <div class="arrow-row">
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; padding: 0 0 0 0;">
+      <div class="arrow-shaft"></div>
+    </div>
+    <div class="arrow-label" style="position:relative; left:-320px; top:-20px; width:220px;">Apply findings to game design ↓</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PHASE 2 — GAME CONCEPT
+  ══════════════════════════════════════════ -->
+  <div class="phase-row">
+    <div class="phase-label p2-label">
+      <span class="phase-num">Phase 2</span>
+      <span class="phase-name">Game Concept</span>
+    </div>
+    <div class="phase-line p2-line"></div>
+    <div class="phase-content">
+
+      <!-- Box: Discussion Prompts -->
+      <div class="box box-p2" style="margin-bottom:10px;">
+        <div class="box-title">Discussion Prompts (Assignment Requirements)</div>
+        <div class="cols-2">
+          <div class="col-cell">
+            <div class="col-cell-label">Q1 · Game Concept</div>
+            <div class="col-cell-body">What is the theme, story, or purpose? What experience should the player have? What challenge or problem drives the gameplay?</div>
+          </div>
+          <div class="col-cell">
+            <div class="col-cell-label">Q2 · Core Mechanic</div>
+            <div class="col-cell-body">What main action will players repeat throughout the game? Define how the game functions moment-to-moment (resource management, puzzle-solving, timing, etc.)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Box: Concept Answers -->
+      <div class="box box-p2">
+        <div class="box-title">EcoBalance — Answers to Discussion Prompts</div>
+        <div class="cols-2">
+          <div class="col-cell">
+            <div class="col-cell-label">Concept &amp; Theme</div>
+            <div class="col-cell-body">
+              Player is City Sustainability Director of <em>Verdana</em>, a growing fictional city. Theme: the real tension between economic growth and ecological responsibility. Purpose: felt understanding of sustainability systems — not just facts.
+              <br><br>
+              <strong>Challenge driving gameplay:</strong> Manage 4 interdependent meters (Carbon, Economy, Community Wellbeing, Biodiversity) over a 10-year in-game timeline without letting any fall into the red.
+            </div>
+          </div>
+          <div class="col-cell">
+            <div class="col-cell-label">Core Mechanic</div>
+            <div class="col-cell-body">
+              <strong>Decision-driven resource management with delayed consequence feedback.</strong>
+              <br><br>
+              Each round: draw 3 policy cards, evaluate trade-offs across 4 meters, choose 1, allocate Green Credits budget. Some effects are immediate; others are queued 1–3 months later — teaching that sustainability outcomes are delayed (research-backed).
+              <br><br>
+              Moment-to-moment: <em>Draw → Evaluate → Decide → Observe consequences → Adapt</em>
+            </div>
+          </div>
+        </div>
+        <div class="research-badge">Research connection: player role identity (Plass 2015) + delayed feedback mirrors ecological cycles (Tan 2023)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ARROW -->
+  <div class="arrow-row">
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center;">
+      <div class="arrow-shaft"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PHASE 3 — ONE-PAGE GAME SPEC
+  ══════════════════════════════════════════ -->
+  <div class="phase-row">
+    <div class="phase-label p3-label">
+      <span class="phase-num">Phase 3</span>
+      <span class="phase-name">Game Spec Sheet</span>
+    </div>
+    <div class="phase-line p3-line"></div>
+    <div class="phase-content">
+
+      <div class="box box-p3">
+        <div class="box-title">One-Page Game Spec — EcoBalance · Sustainability Simulation</div>
+
+        <!-- 5 spec elements in 2 rows: 3 top + 2 bottom -->
+        <div class="cols-3" style="margin-bottom:10px;">
+
+          <div class="col-cell">
+            <div class="col-cell-num">1</div>
+            <div class="col-cell-label">Learning Target</div>
+            <div class="col-cell-body">
+              By end of playthrough, player will:<br>
+              • Explain the 3 pillars of sustainability (environmental, economic, social)<br>
+              • Describe 3+ cause-and-effect relationships between decisions and outcomes<br>
+              • Articulate why sustainability requires systems thinking, not single fixes
+            </div>
+          </div>
+
+          <div class="col-cell">
+            <div class="col-cell-num">2</div>
+            <div class="col-cell-label">Player Role</div>
+            <div class="col-cell-body">
+              <strong>City Sustainability Director</strong> of Verdana.<br><br>
+              Player has real policy agency — every card played shapes the city's trajectory. Role creates ownership and identity investment, which research links to deeper engagement and learning transfer.
+            </div>
+          </div>
+
+          <div class="col-cell">
+            <div class="col-cell-num">3</div>
+            <div class="col-cell-label">Core Loop</div>
+            <div class="loop-pills" style="flex-direction:column; align-items:flex-start; gap:4px;">
+              <div class="loop-pill" style="background:#7c3aed; color:#fff; border-radius:6px; padding:4px 10px; font-size:10.5px;">① Draw 3 Policy Cards</div>
+              <div class="loop-arrow">↓</div>
+              <div class="loop-pill" style="background:#7c3aed; color:#fff; border-radius:6px; padding:4px 10px; font-size:10.5px;">② Evaluate trade-offs across 4 meters</div>
+              <div class="loop-arrow">↓</div>
+              <div class="loop-pill" style="background:#7c3aed; color:#fff; border-radius:6px; padding:4px 10px; font-size:10.5px;">③ Choose 1 card + allocate Green Credits</div>
+              <div class="loop-arrow">↓</div>
+              <div class="loop-pill" style="background:#7c3aed; color:#fff; border-radius:6px; padding:4px 10px; font-size:10.5px;">④ Watch immediate + delayed effects</div>
+              <div class="loop-arrow">↓</div>
+              <div class="loop-pill" style="background:#7c3aed; color:#fff; border-radius:6px; padding:4px 10px; font-size:10.5px;">⑤ Read Verdana Gazette report → Adapt</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="cols-2">
+
+          <div class="col-cell">
+            <div class="col-cell-num">4</div>
+            <div class="col-cell-label">Feedback &amp; Score Metrics</div>
+            <div class="col-cell-body">
+              <strong>4 Live Meters:</strong>
+              <div class="metrics-grid" style="margin-top:6px; margin-bottom:8px;">
+                <div class="metric-item"><div class="metric-dot" style="background:#16a34a;"></div> Carbon Index</div>
+                <div class="metric-item"><div class="metric-dot" style="background:#2563eb;"></div> Economy Score</div>
+                <div class="metric-item"><div class="metric-dot" style="background:#f59e0b;"></div> Community Wellbeing %</div>
+                <div class="metric-item"><div class="metric-dot" style="background:#7c3aed;"></div> Biodiversity Rating</div>
+              </div>
+              <strong>Composite Sustainability Score:</strong> weighted A–F letter grade updated each round.<br><br>
+              <strong>3-layer feedback:</strong><br>
+              • <em>Immediate</em> — meter animations after each card<br>
+              • <em>Monthly</em> — Verdana Gazette headline (plain-language ripple effects)<br>
+              • <em>Yearly</em> — report card with trend chart + 1 recommended adjustment
+            </div>
+          </div>
+
+          <div class="col-cell">
+            <div class="col-cell-num">5</div>
+            <div class="col-cell-label">Win Condition &amp; Learn Condition</div>
+            <div class="col-cell-body">
+              <strong>WIN:</strong> Reach Year 10 with all 4 meters ≥ 60% AND Sustainability Score of B or higher.<br><br>
+              <strong>CRISIS MODE:</strong> If any meter hits red for 3+ consecutive months, city enters crisis — compounding consequences simulate the real cost of delayed action. Player can still recover.<br><br>
+              <strong>LEARN CONDITION (on failure):</strong> "What Happened?" debrief screen shows exactly which decisions created the cascade — turning failure into an explicit, citable learning moment.<br><br>
+              <em>Research basis: corrective post-failure feedback improves retention (Mayer &amp; Johnson, 2010)</em>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ARROW -->
+  <div class="arrow-row">
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center;">
+      <div class="arrow-shaft"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PHASE 4 — AI NEGOTIATION
+  ══════════════════════════════════════════ -->
+  <div class="phase-row">
+    <div class="phase-label p4-label">
+      <span class="phase-num">Phase 4</span>
+      <span class="phase-name">AI Refine</span>
+    </div>
+    <div class="phase-line p4-line"></div>
+    <div class="phase-content">
+
+      <div class="box box-p4">
+        <div class="box-title">AI LLM Prompt &amp; Iterative Negotiation</div>
+        <div class="cols-3">
+          <div class="col-cell">
+            <div class="col-cell-label">Step 1 · Prompt</div>
+            <div class="col-cell-body">Use spec sheet as input prompt. Instruct LLM to produce a <strong>1–1.5 page game spec doc</strong> matching all 5 elements. Be explicit about format and tone.</div>
+          </div>
+          <div class="col-cell">
+            <div class="col-cell-label">Step 2 · Review</div>
+            <div class="col-cell-body">Read output critically. Does it preserve the research-backed design choices? Is the learning target measurable? Are all 5 spec elements present and clear?</div>
+          </div>
+          <div class="col-cell">
+            <div class="col-cell-label">Step 3 · Negotiate</div>
+            <div class="col-cell-body">Push back on weak sections. Refine through dialogue until output matches vision. Accept only when every element reflects both the assignment requirements and the research.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ARROW -->
+  <div class="arrow-row">
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center;">
+      <div class="arrow-shaft"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PHASE 5 — SHARE & PEER FEEDBACK
+  ══════════════════════════════════════════ -->
+  <div class="phase-row">
+    <div class="phase-label p5-label">
+      <span class="phase-num">Phase 5</span>
+      <span class="phase-name">Share &amp; Reflect</span>
+    </div>
+    <div class="phase-line p5-line"></div>
+    <div class="phase-content">
+
+      <div class="box box-p5">
+        <div class="box-title">Share Game Concept &amp; Give Peer Feedback (Discussion Board)</div>
+        <div class="cols-2">
+          <div class="col-cell">
+            <div class="col-cell-label">Initial Post</div>
+            <div class="col-cell-body">
+              Post to discussion board with:<br>
+              • Full game concept (theme, purpose, player experience, challenge)<br>
+              • Core mechanic described clearly moment-to-moment<br>
+              • Research connections cited (Plass, Tan, ILE review)<br>
+              • One-page game spec sheet attached or embedded
+            </div>
+          </div>
+          <div class="col-cell">
+            <div class="col-cell-label">Peer Feedback (Reply ×2)</div>
+            <div class="col-cell-body">
+              Respond to 2 classmates with structured, constructive feedback:<br>
+              • Does their learning target match the mechanic?<br>
+              • Is the core loop clear and repeatable?<br>
+              • How does their game connect to research on learning?<br>
+              • One specific suggestion to strengthen their spec
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <span class="legend-title">Phase Key</span>
+    <div class="legend-item"><div class="legend-chip" style="background:#dbeafe;border:1.5px solid #93c5fd;"></div> Research</div>
+    <div class="legend-item"><div class="legend-chip" style="background:#fef3c7;border:1.5px solid #fcd34d;"></div> Game Concept</div>
+    <div class="legend-item"><div class="legend-chip" style="background:#ede9fe;border:1.5px solid #c4b5fd;"></div> Game Spec</div>
+    <div class="legend-item"><div class="legend-chip" style="background:#fce7f3;border:1.5px solid #f9a8d4;"></div> AI Refine</div>
+    <div class="legend-item"><div class="legend-chip" style="background:#dcfce7;border:1.5px solid #86efac;"></div> Share &amp; Reflect</div>
+    <div style="margin-left:auto; font-size:10px; color:#9ca3af; font-style:italic;">Plass et al. (2015) · Tan et al. (2023) · ILE (2024) · Frontiers in Education (2025)</div>
+  </div>
+
+</div>
+</body>
+</html>

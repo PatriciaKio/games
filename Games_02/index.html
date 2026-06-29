@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FlowPath — Sustainable Irrigation</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="hud">
+  <div class="hud-title">FlowPath <span class="sub">Sustainable Irrigation</span></div>
+  <div class="hud-stats">
+    <div class="stat"><span class="label">Level</span><span id="hud-level">1 / 6</span></div>
+    <div class="stat"><span class="label">Place</span><span id="hud-place">—</span></div>
+    <div class="stat"><span class="label">Budget</span><span id="hud-budget">0</span></div>
+    <div class="stat"><span class="label">Current cost</span><span id="hud-cost">0</span></div>
+    <div class="stat"><span class="label">Water quality</span><span id="hud-quality">100</span></div>
+    <div class="stat"><span class="label">Stars</span><span id="hud-stars">—</span></div>
+  </div>
+</header>
+
+<main>
+  <section id="stage">
+    <canvas id="map" width="704" height="528" aria-label="Irrigation map. Carve a water path from the source to the farms." role="img" tabindex="0"></canvas>
+    <div id="weather-bar" aria-live="polite"></div>
+    <div id="message" role="status" aria-live="polite"></div>
+  </section>
+
+  <aside id="panel">
+    <div class="panel-block">
+      <h2>How to play</h2>
+      <p class="hint">Click &amp; drag on the map to <b>carve a channel</b> from the <b>blue source</b> 💧 to the <b>green farms</b> 🌱. Then press <b>Test flow</b>. Adjust and re-test as often as you like.</p>
+      <p class="hint">Right-click (or drag with the Erase tool) to remove channel tiles.</p>
+    </div>
+
+    <div class="panel-block">
+      <h2>Tools</h2>
+      <div class="btn-row">
+        <button id="tool-carve" class="tool active">✏️ Carve</button>
+        <button id="tool-erase" class="tool">🧽 Erase</button>
+      </div>
+      <div class="btn-row">
+        <button id="btn-test" class="primary">▶ Test flow</button>
+        <button id="btn-clear">↺ Clear</button>
+      </div>
+      <div class="btn-row">
+        <button id="btn-prev">◀ Prev</button>
+        <button id="btn-next">Next ▶</button>
+      </div>
+    </div>
+
+    <div class="panel-block">
+      <h2>Cost breakdown</h2>
+      <table id="cost-table">
+        <tr><td>Channel length</td><td id="c-length">0</td></tr>
+        <tr><td>Pumping (uphill lift)</td><td id="c-pump">0</td></tr>
+        <tr><td>Lining (steep segments)</td><td id="c-line">0</td></tr>
+        <tr><td>Drainage reuse credit</td><td id="c-reuse">0</td></tr>
+        <tr class="total"><td>Total cost</td><td id="c-total">0</td></tr>
+      </table>
+    </div>
+
+    <div class="panel-block">
+      <h2>Legend</h2>
+      <ul id="legend">
+        <li><span class="chip src">💧</span> Water source</li>
+        <li><span class="chip sink">🌱</span> Farm (deliver here)</li>
+        <li><span class="chip poll">☣</span> Pollutant zone (avoid radius)</li>
+        <li><span class="chip drain">▒</span> Existing drainage (reuse = credit)</li>
+        <li><span class="chip obs">⛰</span> Obstacle (cannot carve)</li>
+        <li><span class="chip elev">▤</span> Elevation: lighter = higher, darker = lower</li>
+      </ul>
+    </div>
+
+    <div class="panel-block">
+      <h2>Research log</h2>
+      <p class="hint">Every test attempt is recorded for the study.</p>
+      <div class="btn-row">
+        <button id="btn-export">⬇ Export attempts (JSON)</button>
+      </div>
+      <p class="hint" id="log-count">0 attempts logged.</p>
+    </div>
+  </aside>
+</main>
+
+<!-- Level intro / result modal -->
+<div id="modal" class="hidden" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <h2 id="modal-title">Level</h2>
+    <p id="modal-place" class="modal-place"></p>
+    <p id="modal-body"></p>
+    <p id="modal-fact" class="fact"></p>
+    <p id="modal-source" class="source"></p>
+    <p id="modal-sdg" class="sdg"></p>
+    <div id="modal-objectives"></div>
+    <div class="btn-row">
+      <button id="modal-go" class="primary">Start</button>
+    </div>
+  </div>
+</div>
+
+<!-- No ES modules: plain scripts so the game runs from file:// by double-clicking index.html -->
+<script src="js/levels.js"></script>
+<script src="js/grid.js"></script>
+<script src="js/simulation.js"></script>
+<script src="js/telemetry.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
