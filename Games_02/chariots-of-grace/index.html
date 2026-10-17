@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chariots of Grace — A Journey Through the Ten Commandments</title>
+<meta name="theme-color" content="#141a33">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="topnav">
+  <div class="brand">👑 Chariots of Grace</div>
+  <nav>
+    <button class="nav-tab active" data-tab="play">Journey</button>
+    <button class="nav-tab" data-tab="law">Commandments</button>
+    <button class="nav-tab" data-tab="donate">Donate</button>
+    <button class="nav-tab" data-tab="about">About</button>
+  </nav>
+</header>
+
+<main>
+  <section id="tab-play" class="tab-panel active">
+    <div id="hud" aria-label="Your stats"></div>
+    <div id="stage" class="panel-block" aria-live="polite"></div>
+  </section>
+
+  <section id="tab-law" class="tab-panel">
+    <div class="panel-block">
+      <h2>The Ten Commandments</h2>
+      <p class="hint">Exodus 20:1–17 (KJV). Your journey record appears beside each one as you play.</p>
+      <ol id="law-list" class="law-list"></ol>
+      <h3>The greatest commandments</h3>
+      <p>Jesus summed up the whole law in two: love God with all your heart, soul and mind — and love your neighbour as yourself (Matthew 22:37–39). The first four commandments teach love for God; the last six teach love for people.</p>
+    </div>
+  </section>
+
+  <section id="tab-donate" class="tab-panel">
+    <div class="panel-block donate-block">
+      <h2>Support Chariots of Grace 🕊️</h2>
+      <p>This game is <b>free</b> for every family, Sunday school, and classroom — no ads, no accounts, no in-game purchases. Everything in the game is earned by your choices, never bought. It runs entirely in your browser, but writing new stories, hosting the site, and maintaining it all take real time.</p>
+      <p>If the game helped someone you love think about kindness, honesty, and forgiveness, you can be a cheerful giver too:</p>
+      <div class="donate-tiers">
+        <div class="tier-card"><div class="tier-amount">$3</div><div class="tier-name">Two small coins</div></div>
+        <div class="tier-card"><div class="tier-amount">$10</div><div class="tier-name">Loaves &amp; fishes</div></div>
+        <div class="tier-card"><div class="tier-amount">$25</div><div class="tier-name">A double portion</div></div>
+      </div>
+      <div class="btn-row">
+        <a class="primary btn-link" href="https://ko-fi.com/gigglebyte1010" target="_blank" rel="noopener">💛 One-time donation</a>
+        <a class="btn-link" href="https://ko-fi.com/gigglebyte1010/tiers" target="_blank" rel="noopener">🔁 Become a monthly supporter</a>
+      </div>
+      <p class="hint">Donations are processed securely by Ko-fi — you'll leave this page briefly to complete payment. Donating never changes your score: grace in this game, like in the Bible, can't be bought.</p>
+    </div>
+  </section>
+
+  <section id="tab-about" class="tab-panel">
+    <div class="panel-block">
+      <h2>How to play</h2>
+      <ol>
+        <li><b>🛞 Travel by chariot</b> through 12 stops — one Bible story for each of the Ten Commandments, plus a story of forgiveness and a story of giving.</li>
+        <li><b>📖 Read the story</b>, then face a <b>life choice</b> from today's world that tests the same commandment.</li>
+        <li><b>⚖️ Choose.</b> Faithful choices earn a <b>👑 crown</b>, raise your <b>❤️ virtue</b> and <b>✝️ faith</b>, and earn <b>🪙 talents</b>.</li>
+        <li><b>🪨 Wrong choices add a burden.</b> But the road home is always open: choose to <b>repent</b> like the prodigal son and your burden is lifted. Forgiving someone else lifts a burden too.</li>
+        <li><b>🎲 Cast the lot for a Moment of Grace</b> after each stop — manna, ravens, angels, a double portion, or a trial. Strong faith (70+) improves your roll.</li>
+        <li><b>👼 Angels</b> can show you the wise path on a hard choice, and stand guard during a trial.</li>
+        <li><b>🔥 Upgrade your chariot</b> with talents, from a shepherd's cart all the way to a chariot of fire.</li>
+        <li><b>🪑 Reach the throne room</b> at the end, lay down your burdens, and cast your crowns before the throne.</li>
+      </ol>
+      <h2>A note on grace</h2>
+      <p class="hint">The dice add surprise — but in the game, as in the Bible, <b>forgiveness is never left to chance.</b> Whenever you repent, you're forgiven, every time (1 John 1:9). The "Moments of Grace" are unexpected blessings along the road, reflecting the idea that "time and chance happeneth to them all" (Ecclesiastes 9:11) while God remains in control (Proverbs 16:33).</p>
+      <h2>Sources</h2>
+      <p class="hint">Story summaries are written in our own words for young readers. Short quotations are from the King James Version (public domain). We encourage players to read each full passage — references are shown on every story card.</p>
+      <h2>Accessibility</h2>
+      <ul>
+        <li>Every interactive element is a real button, usable with Tab + Enter/Space.</li>
+        <li>Story and outcome text is announced to screen readers via <code>aria-live</code>.</li>
+        <li>Animations respect your system's "reduce motion" setting.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script src="js/stories.js"></script>
+<script src="js/art.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
